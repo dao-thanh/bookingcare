@@ -1,0 +1,220 @@
+# version: '3.8'
+# networks:
+#   app-tier:
+#     driver: bridge
+# services:
+#   mysqldb:
+#     image: mysql:5.7
+#     # container_name: mydb
+#     command: --default-authentication-plugin=mysql_native_password
+#     restart: always
+#     expose:
+#       - "3306"
+#     ports:
+#       - "3307:3306" 
+#     # restart: unless-stopped
+#     # env_file: ./.env
+#     environment:
+#       MYSQL_ROOT_PASSWORD: daothanh1999,
+#       MYSQL_DATABASE: test_node,
+#       # MYSQL_DATABASE: school
+#       # MYSQL_ALLOW_EMPTY_PASSWORD: ok
+#       # MYSQL_ROOT_PASSWORD: root
+#       # MYSQL_USER: root
+#       # MYSQL_PASSWORD: daothanh1999
+#       # MYSQL_ROOT_HOST: '%'
+#       # MYSQL_DATABASE: test_node,
+#       # MYSQL_USER: root,
+#       # MYSQL_PASSWORD: daothanh1999,
+#       # # MYSQL_ROOT_PASSWORD: daothanh1999,
+#       # SERVICE_TAGS: dev
+#       # SERVICE_NAME: mysqldb
+#     # ports:
+#     #   - 3307:3306
+#     volumes:
+#       - db:/var/lib/mysql
+    
+#     networks:
+#       - app-tier    
+#   app:
+#     depends_on:
+#       - mysqldb
+#     build: .
+#     # restart: unless-stopped
+#     # container_name: nodejs
+#     # env_file: ./.env
+#     command: bash -c 'while !</dev/tcp/db/3306; do sleep 1; done; npm start'
+#     ports:
+#       - 8080:8080
+#     networks:
+#       - app-tier  
+#     environment:
+#       PORT: 8080
+#       NODE_ENV: development
+#       URL_REACT: http://localhost:3000
+#     #   - DB_HOST=mysqldb
+#     #   - DB_USER=root
+#     #   - DB_PASSWORD=daothanh1999
+#     #   - DB_NAME=test_node
+#     #   - DB_PORT=3306
+#     stdin_open: true
+#     tty: true
+# volumes: 
+#   db:
+
+# version: "3.8"
+
+# networks:
+#   app-tier:
+#     driver: bridge
+
+# services:
+#   db:
+#     image: mysql
+#     command: --default-authentication-plugin=mysql_native_password
+#     restart: always
+#     expose:
+#       - "3306"
+#     ports:
+#       - "3306:3306"    
+#     networks:
+#       - app-tier      
+#     environment:
+#       MYSQL_DATABASE: test_node
+#       MYSQL_ALLOW_EMPTY_PASSWORD: daothanh1999
+#       MYSQL_ROOT_PASSWORD: root
+#       MYSQL_USER: dbuser
+#       MYSQL_PASSWORD: dbuser
+#       MYSQL_ROOT_HOST: '%'
+#   backend:
+#     depends_on:
+#       - db
+#     build: .
+#     command: bash -c 'while !</dev/tcp/db/3306; do sleep 1; done; npm start'
+#     ports:
+#       - "3000:3000"
+#     networks:
+#       - app-tier  
+
+
+# version: "3.8"
+# services:
+#   mysqldb:
+#     image: mysql:5.7
+#     environment:
+#       MYSQL_ROOT_PASSWORD: password
+#       MYSQL_DATABASE: test
+#     restart: always
+#   web:
+#     build: ./web
+#     environment:
+#       MYSQL_DATABASE: test
+#       MYSQL_USER: root
+#       MYSQL_PASSWORD: password
+#       MYSQL_HOST: db
+#     ports:
+#       - "5000:5000"
+#     depends_on:
+#       - db
+#     restart: on-failure
+
+
+# version: '3.8'
+
+# services:
+#   app:
+#       depends_on:
+#         - mysql
+#       # container_name: node_server 
+#       build: 
+#         context: .
+#         dockerfile: ./Dockerfile
+#       volumes:
+#        - ./:/app
+#       # build: .
+#       restart: unless-stopped
+#       # container_name: nodejs
+#       # env_file: ./.env
+#       ports:
+#         - 6868:8080
+#       command: sh -c "npm install && npm start"  
+#       # command: ["./wait-for-it.sh", "mysql:3306", "--", "sh", "-c", "npm start"]
+#       environment:
+#         MYSQL_HOST: mysql
+#         MYSQL_USER: root
+#         MYSQL_PASSWORD: secret
+#         MYSQL_DB: todos
+#       # environment:
+#       #   PORT: 8080
+#       #   NODE_ENV: development
+#       #   # DB_USERNAME: root
+#       #   # DB_PASSWORD: daothanh1999
+#       #   # DB_DATABASE: test_node
+#       #   # DB_HOSTNAME: mysql
+#       #   URL_REACT: http://localhost:3000
+#       #   # MYSQL_HOST: mysql
+#       #   # MYSQL_USER: root
+#       #   # MYSQL_PASSWORD: secret
+#       #   # MYSQL_DB: todos
+#       # stdin_open: true
+#       # tty: true
+#       networks:
+#         - common    
+#   mysql:
+#     image: mysql:5.7
+#     restart: unless-stopped
+#     container_name: mysql
+#     command: --default-authentication-plugin=mysql_native_password
+#     ports:
+#       - "3307:3306" 
+     
+#     networks:
+#       - common  
+#     # env_file: ./.env
+#     environment:
+#       # MYSQL_RANDOM_ROOT_PASSWORD: "yes"
+#       MYSQL_ROOT_PASSWORD: daothanh1999,
+#       MYSQL_DATABASE: test_node,
+      
+#       # MYSQL_HOST: localhost
+#       MYSQL_USER: admin
+#       MYSQL_PASSWORD: daothanh1999
+#       # MYSQL_USER: "root"
+#       SERVICE_NAME: mysql
+#       SERVICE_TAGS: prod
+    
+#     volumes:
+#       - db:/var/lib/mysql
+  
+# networks:
+#   common:
+# volumes: 
+#   db:  
+
+version: "3.7"
+
+services:
+  bookingcare-app:
+    image: node:12-alpine
+    command: sh -c "npm install && npm start"
+    ports:
+      - 8080:8080
+    working_dir: /app
+    volumes:
+      - ./:/app
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_USER: root
+      MYSQL_PASSWORD: secret
+      MYSQL_DB: test_node
+
+  mysql:
+    image: mysql:5.7
+    volumes:
+      - todo-mysql-data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: test_node
+
+volumes:
+  todo-mysql-data:
