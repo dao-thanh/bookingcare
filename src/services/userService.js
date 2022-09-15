@@ -225,11 +225,11 @@ let getAllCodeService = (typeInput) => {
     })
 }
 
-module.exports = {
+ module.exports = {
     handleUserLogin: handleUserLogin,
     getAllUsers: getAllUsers,
     createNewUser: createNewUser,
     deleteUser: deleteUser,
     updateUserData: updateUserData,
-    getAllCodeService: getAllCodeService
+    getAllCodeService: getAllCodeService,
 }
