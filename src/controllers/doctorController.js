@@ -32,6 +32,7 @@ let postInforDoctor = async (req, res) => {
         let response  = await doctorService.saveDetailInforDoctor(req.body);
         return res.status(200).json(response)
     }catch(e) {
+        console.log(e)
         return res.status(200).json({
             errCode: -1,
             errMessage: 'Error from the server'
