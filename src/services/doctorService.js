@@ -1,6 +1,6 @@
 import db from "../models/index";
 import _ from "lodash";
-require('dotenv').config({path: __dirname + '/.env' })
+require('dotenv').config()
 import emailService from '../services/emailService';
 
 let getTopDoctorHome = (limitInput) => {

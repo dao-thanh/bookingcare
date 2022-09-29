@@ -1,5 +1,5 @@
 import db from "../models/index";
-require('dotenv').config({path: __dirname + '/.env' })
+require('dotenv').config()
 import emailService from './emailService';
 import { v4 as uuidv4 } from 'uuid';
  
