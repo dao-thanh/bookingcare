@@ -3,9 +3,10 @@ node_modules/
 package-lock.json 
 
 
-/vendor
-/.idea
-.idea/
+# Optional eslint cache
+.eslintcache
+
+# dotenv environment variables file
 .env
 
-
+sampledata.archive
